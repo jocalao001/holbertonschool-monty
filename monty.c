@@ -1,52 +1,44 @@
 #include "monty.h"
-
-info_t var = {0, NULL, NULL, NULL, NULL, 0, 1};
 /**
- * main - driver function for monty program
- * @argc: int num of arguments
- * @argv: opcode file
- * Return: 0
+ * main - funcion principal
+ * @argc: cantidad de argumentos
+ * @argv: lista de argumento
+ * Return: Always 0.
  */
-
 int main(int argc, char **argv)
 {
-	char buff[1024] = {0};
+	stack_t *stack = NULL;
+	int i = 0, line_number = 0;
+	char buffer[1000], *opcode;
+	FILE *file = fopen(argv[1], "r");
 
-	/* Comprobar que se ha proporcionado un único argumento */
 	if (argc != 2)
+		error_de_uso();
+	if (file == NULL)
+		error_archivo(argv[1]);
+	while (fgets(buffer, 1000, file))
 	{
-		fprintf(stderr, "USAGE: monty file\n");
-		exit(EXIT_FAILURE);
-	}
-
-	/* Abrir el archivo con el código Monty */
-	var.fp = fopen(argv[1], "r");
-	if (var.fp == NULL)
-	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
-	}
-
-	/* Leer líneas del archivo */
-	while (fgets(buff, sizeof(buff), var.fp) != NULL)
-	{
-		/* Separar la línea en palabras */
-		var.opcode = strtok(buff, " \t\n");
-		if (var.opcode == NULL || var.opcode[0] == '#')
-		{
-			var.line_num++;
+		line_number++;
+		opcode = strtok(buffer, " \n");
+		if (opcode == NULL || opcode[0] == '#')
 			continue;
+		while (instructions[i].opcode)
+		{
+			if (strcmp(instructions[i].opcode, opcode) == 0)
+			{
+				instructions[i].f(&stack, line_number);
+				break;
+			}
+			i++;
 		}
-		var.argum = strtok(NULL, " \t\n");
-		exec_opcode(var.opcode);
-		var.line_num++;
+		if (instructions[i].opcode == NULL)
+		{
+			fprintf(stderr, "L%u: unknown instruction %s\n",  line_number, opcode);
+			exit(EXIT_FAILURE);
+		}
+		i = 0;
 	}
-	/* Freeing*/
-	freeStack();
-
-	/* Cerrar el archivo */
-	fclose(var.fp);
-
-	/* Salir con éxito */
+	fclose(file);
+	free_stack(stack);
 	return (EXIT_SUCCESS);
 }

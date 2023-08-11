@@ -40,7 +40,6 @@ void add_op(stack_t **stack, unsigned int line_number)
 	*stack = new_node;
 	stack_t *temp = top;
 
-
 	while (top != NULL)
 	{
 		top = top->next;

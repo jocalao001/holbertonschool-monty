@@ -3,7 +3,7 @@
  * pop_op -      Function that removes the top element of the stack.
  * @stack:       Head of the stack.
  * @line_number: Current line.
-*/
+ */
 void pop_op(stack_t **stack, unsigned int line_number)
 {
 	if (*stack == NULL)

@@ -19,8 +19,7 @@ void exec_opcode(char *opcode)
 		{"swap", swap_op},
 		{"add", add_op},
 		{"nop", nop_op},
-		{NULL, NULL}
-	};
+		{NULL, NULL}};
 
 	while ((opcode_list[counter].opcode != NULL))
 	{

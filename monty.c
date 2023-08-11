@@ -6,7 +6,7 @@ info_t var = {0, NULL, NULL, NULL, NULL, 0, 1};
  * @argc: int num of arguments
  * @argv: opcode file
  * Return: 0
-*/
+ */
 
 int main(int argc, char **argv)
 {

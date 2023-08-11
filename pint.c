@@ -3,7 +3,7 @@
  * pint_op -     Function that prints the value at the top of stack.
  * @stack:       Head of the stack.
  * @line_number: File's line number.
-*/
+ */
 void pint_op(stack_t **stack, unsigned int line_number)
 {
 	stack_t *h = NULL;
@@ -19,5 +19,4 @@ void pint_op(stack_t **stack, unsigned int line_number)
 	}
 
 	printf("%d\n", h->n);
-
 }
